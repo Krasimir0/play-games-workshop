@@ -6,5 +6,13 @@
         "imageUrl": "https://upload.wikimedia.org/wikipedia/en/6/68/Bloodborne_Cover_Wallpaper.jpg",
         "summary": "Bloodborne is a 2015 action role-playing video game developed by FromSoftware and published by Sony Computer Entertainment for the PlayStation 4.",
         "_id": "03f539bc-a808-4526-8261-26e44b2d892a"
+    },
+    "54de2123-961f-4d9c-89ce-8a7fb247558a": {
+        "title": "Super Mario Wonder",
+        "category": "Adventure",
+        "maxLevel": "1000",
+        "imageUrl": "https://m.media-amazon.com/images/I/71jnJweN-lL._AC_UF894,1000_QL80_.jpg",
+        "summary": "A world of wonder awaits! Every course contains its very own Wonder Flower – collect one, and anything can happen. From moving pipes to tilting ...",
+        "_id": "54de2123-961f-4d9c-89ce-8a7fb247558a"
     }
 }

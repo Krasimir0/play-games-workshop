@@ -7,10 +7,8 @@ const createGame = (gameData) => {
 }
 
 const getAll = async () => {
-    const result = requester.get(baseUrl);
-
+    const result = await requester.get(baseUrl);
     const games = Object.values(result);
-
     return games;
 }
 
