@@ -12,10 +12,15 @@ const getAll = async () => {
     return games;
 }
 
+const getOne = (gameId) => {
+    return requester.get(`${baseUrl}/${gameId}`);
+}
+
 
 const gameService = {
     createGame,
-    getAll
+    getAll,
+    getOne
 }
 
 export default gameService;
