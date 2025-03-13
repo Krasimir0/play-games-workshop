@@ -19,12 +19,17 @@ const getOne = (gameId) => {
 const deleteGame = (gameId) => {
     return requester.delete(`${baseUrl}/${gameId}`)
 }
+
+const editGame = (gameId, gameData) => {
+    return requester.put(`${baseUrl}/${gameId}`, {...gameData, _id: gameId})
+}
  
 const gameService = {
     createGame,
     getAll,
     getOne,
-    deleteGame
+    deleteGame,
+    editGame
 }
 
 export default gameService;
