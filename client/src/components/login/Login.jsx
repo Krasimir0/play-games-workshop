@@ -16,7 +16,7 @@ export default function Login({ onLogin }) {
         <div className="container">
           <div className="brand-logo"></div>
           <h1>Login</h1>
-          <label hmtlFor="email">Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
@@ -24,7 +24,7 @@ export default function Login({ onLogin }) {
             placeholder="Sokka@gmail.com"
           />
 
-          <label hmtlFor="login-pass">Password:</label>
+          <label htmlFor="login-pass">Password:</label>
           <input type="password" id="login-password" name="password" />
           <input type="submit" className="btn submit" value="Login" />
           <p className="field">
