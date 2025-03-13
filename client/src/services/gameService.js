@@ -16,11 +16,15 @@ const getOne = (gameId) => {
     return requester.get(`${baseUrl}/${gameId}`);
 }
 
-
+const deleteGame = (gameId) => {
+    return requester.delete(`${baseUrl}/${gameId}`)
+}
+ 
 const gameService = {
     createGame,
     getAll,
-    getOne
+    getOne,
+    deleteGame
 }
 
 export default gameService;
