@@ -1,76 +1,61 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router"
+import { Link, useNavigate, useParams } from "react-router";
 import gameService from "../../services/gameService";
+import CreateComments from "../create-comments/CreateComments";
+import ShowComments from "../show-comments/ShowComments";
 
 export default function GameDetails() {
-    const navigate = useNavigate();
-    const [game,  setGame]  = useState({})
-    const { gameId } = useParams();
-    
-    useEffect(() => {
-        (async () => {
-            const result = await gameService.getOne(gameId);
-            setGame(result)
-        })()
-    }, [gameId])
+  const navigate = useNavigate();
+  const [game, setGame] = useState({});
+  const { gameId } = useParams();
 
-    const gameDeleteClickHandler = async () => {
-        const hasConfirm = confirm(`Are you sure you want to delete ${game.title} game?`)
+  useEffect(() => {
+    (async () => {
+      const result = await gameService.getOne(gameId);
+      setGame(result);
+    })();
+  }, [gameId]);
 
-        if (!hasConfirm) {
-            return
-        }
+  const gameDeleteClickHandler = async () => {
+    const hasConfirm = confirm(
+      `Are you sure you want to delete ${game.title} game?`
+    );
 
-        await gameService.deleteGame(gameId);
-
-        navigate('/games')
+    if (!hasConfirm) {
+      return;
     }
 
-    return (
-        <section id="game-details">
-        <h1>Game Details</h1>
-        <div className="info-section">
+    await gameService.deleteGame(gameId);
 
-            <div className="game-header">
-                <img className="game-img" src={game.imageUrl} />
-                <h1>{game.title}</h1>
-                <span className="levels">MaxLevel: {game.maxLevel}</span>
-                <p className="type">{game.category}</p>
-            </div>
+    navigate("/games");
+  };
 
-            <p className="text">{game.summary}</p>
-
-            <div className="details-comments">
-                <h2>Comments:</h2>
-                <ul>
-                    <li className="comment">
-                        <p>Content: I rate this one quite highly.</p>
-                    </li>
-                    <li className="comment">
-                        <p>Content: The best game.</p>
-                    </li>
-                </ul>
-                <p className="no-comment">No comments.</p>
-            </div>
-
-            <div className="buttons">
-                <Link to={`/games/${gameId}/edit`} className="button">Edit</Link>
-                <button
-                 className="button"
-                 onClick={gameDeleteClickHandler}
-                >
-                Delete
-                </button>
-            </div>
+  return (
+    <section id="game-details">
+      <h1>Game Details</h1>
+      <div className="info-section">
+        <div className="game-header">
+          <img className="game-img" src={game.imageUrl} />
+          <h1>{game.title}</h1>
+          <span className="levels">MaxLevel: {game.maxLevel}</span>
+          <p className="type">{game.category}</p>
         </div>
 
-        <article className="create-comment">
-            <label>Add new comment:</label>
-            <form className="form">
-                <textarea name="comment" placeholder="Comment......"></textarea>
-                <input className="btn submit" type="submit" value="Add Comment"/>
-            </form>
-        </article>
+        <p className="text">{game.summary}</p>
+
+        <ShowComments />
+
+        <div className="buttons">
+          <Link to={`/games/${gameId}/edit`} className="button">
+            Edit
+          </Link>
+          <button className="button" onClick={gameDeleteClickHandler}>
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <CreateComments />
     </section>
-    )
+  );
 }
