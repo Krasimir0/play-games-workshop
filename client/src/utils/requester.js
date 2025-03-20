@@ -1,9 +1,7 @@
 const request = async (method, url, data, options = {}) => {
   
   if (method !== "GET") {
-    options = {
-      method,
-    };
+      options.method = method;
   }
 
   if (data) {
@@ -25,7 +23,6 @@ const request = async (method, url, data, options = {}) => {
   }
 
   const result = await response.json();
-
   return result;
 };
 
