@@ -21,8 +21,12 @@ export default function App() {
 		setAuthData(resultData);
 	}
 
+	const userLogoutHandler = () => {
+		setAuthData({})
+	}
+
   return (
-	<userContext.Provider value={{...authData, userLoginHandler}}>
+	<userContext.Provider value={{...authData, userLoginHandler, userLogoutHandler}}>
 	<div id="box">
 		<Header />
 

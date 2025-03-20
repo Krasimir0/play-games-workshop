@@ -35,16 +35,23 @@ export const useRegister = () => {
 };
 
 export const useLogout = () => {
-    const { accessToken } = useContext(userContext);
+    const { accessToken, userLogoutHandler } = useContext(userContext);
     
-    const options = {
-        headers: {
-            'X-Authorization': accessToken
+    useEffect(() => {
+        if (!accessToken) {
+            return;
         }
-    }
-    const logout = () => requester.get(`${baseUrl}/logout`, null,  options)
+        const options = {
+            headers: {
+                'X-Authorization': accessToken,
+            }
+        };
+        requester.get(`${baseUrl}/logout`, null,  options)
+        .then(userLogoutHandler)
+
+    }, [accessToken, userLogoutHandler]);
 
     return {
-        logout
+        isLoggedOut: !!accessToken,
     }
 }
