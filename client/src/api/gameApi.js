@@ -1,15 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import requester from "../utils/requester";
 import { userContext } from "../contexts/userContexts";
 
 const baseUrl = 'http://localhost:3030/data/games';
 
 
-const getAll = async () => {
-    const result = await requester.get(baseUrl);
-    const games = Object.values(result);
-    return games;
-}
 
 const getOne = (gameId) => {
     return requester.get(`${baseUrl}/${gameId}`);
@@ -22,9 +17,8 @@ const deleteGame = (gameId) => {
 const editGame = (gameId, gameData) => {
     return requester.put(`${baseUrl}/${gameId}`, {...gameData, _id: gameId})
 }
- 
+
 const gameService = {
-    getAll,
     getOne,
     deleteGame,
     editGame
@@ -32,6 +26,19 @@ const gameService = {
 
 export default gameService;
 
+
+export const useGames = () => {
+    const [games, setGames] = useState([]);
+
+    useEffect(() => {
+        requester.get(baseUrl)
+        .then(setGames)
+    }, [])
+
+    return {
+        games,
+    }
+}
 
 export const useCreateGame = () => {
     const { accessToken } = useContext(userContext);
