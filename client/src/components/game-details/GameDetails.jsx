@@ -5,22 +5,19 @@ import CreateComments from "../create-comments/CreateComments";
 import ShowComments from "../show-comments/ShowComments";
 import commentService from "../../services/commentService";
 import { userContext } from "../../contexts/userContexts";
+import { useGame } from "../../api/gameApi";
 
 export default function GameDetails() {
   const navigate = useNavigate();
   const { email } = useContext(userContext) 
-  const [game, setGame] = useState({});
   const { gameId } = useParams();
   const [comments, setComments] = useState([])
+  const { game } = useGame(gameId);
 
   useEffect(() => {
-      gameService.getOne(gameId)
-        .then(setGame);
-
-        commentService.getAll(gameId)
-         .then(setComments)
-    }, [gameId]);
-
+      commentService.getAll(gameId)
+      .then(setComments)
+  }, [gameId])
   const gameDeleteClickHandler = async () => {
     const hasConfirm = confirm(
       `Are you sure you want to delete ${game.title} game?`

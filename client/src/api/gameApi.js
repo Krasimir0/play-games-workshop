@@ -42,8 +42,7 @@ export const useGames = () => {
 
 export const useCreateGame = () => {
     const { accessToken } = useContext(userContext);
-    console.log(accessToken);
-    
+
     const options = {
         headers: {
             'X-Authorization': accessToken,
@@ -56,5 +55,17 @@ export const useCreateGame = () => {
     
     return {
         create
+    }
+}
+
+export const useGame = (gameId) => {
+    const [game, setGame] = useState({});
+
+    useEffect(() => {
+        requester.get(`${baseUrl}/${gameId}`)
+        .then(setGame)
+    }, [gameId])
+    return {
+        game,
     }
 }
