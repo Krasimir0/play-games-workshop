@@ -8,16 +8,15 @@ import useAuth from "../../hooks/useAuth";
 
 export default function GameDetails() {
   const navigate = useNavigate();
-  const { email } = useAuth(); 
+  const { email, _id: userId } = useAuth();
   const { gameId } = useParams();
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState([]);
   const { game } = useGame(gameId);
-  const { deleteGame } = useDeleteGame()
+  const { deleteGame } = useDeleteGame();
 
   useEffect(() => {
-      commentService.getAll(gameId)
-      .then(setComments)
-  }, [gameId])
+    commentService.getAll(gameId).then(setComments);
+  }, [gameId]);
   const gameDeleteClickHandler = async () => {
     const hasConfirm = confirm(
       `Are you sure you want to delete ${game.title} game?`
@@ -33,8 +32,10 @@ export default function GameDetails() {
   };
 
   const createCommentCreateHandler = (newComment) => {
-    setComments(state => [...state, newComment])
-  }
+    setComments((state) => [...state, newComment]);
+  };
+
+  const isOwner = userId === game._ownerId;
 
   return (
     <section id="game-details">
@@ -51,21 +52,23 @@ export default function GameDetails() {
 
         <ShowComments comments={comments} />
 
-        <div className="buttons">
-          <Link to={`/games/${gameId}/edit`} className="button">
-            Edit
-          </Link>
-          <button className="button" onClick={gameDeleteClickHandler}>
-            Delete
-          </button>
-        </div>
+        {isOwner && (
+          <div className="buttons">
+            <Link to={`/games/${gameId}/edit`} className="button">
+              Edit
+            </Link>
+            <button className="button" onClick={gameDeleteClickHandler}>
+              Delete
+            </button>
+          </div>
+        )}
       </div>
 
       <CreateComments
-       email={email}
-       gameId={gameId}
-       onCreate={createCommentCreateHandler}
-       />
+        email={email}
+        gameId={gameId}
+        onCreate={createCommentCreateHandler}
+      />
     </section>
   );
 }
