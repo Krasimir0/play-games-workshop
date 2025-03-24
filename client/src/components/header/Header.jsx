@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router";
-import { userContext } from "../../contexts/userContexts";
+import { userContext } from "../../contexts/userContext";
 
 export default function Header() {
   const { email } = useContext(userContext);

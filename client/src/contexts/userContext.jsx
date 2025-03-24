@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export const userContext = createContext({
     id: '',
@@ -8,3 +8,9 @@ export const userContext = createContext({
     userLoginHandler: () => null,
     userLogoutHandler: () => null
 })
+
+export function useUserContext() {
+    const data = useContext(userContext)
+
+    return data;
+}
