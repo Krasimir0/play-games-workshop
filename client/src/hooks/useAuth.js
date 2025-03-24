@@ -6,7 +6,7 @@ export default function useAuth() {
     const authData = useContext(userContext);
 
     const requestWrapper = (method, url, data, options = {}) => {
-        const optionWrapper = { 
+        const authOptions = { 
             ...options,
             headers: {
                 'X-Authorization': authData.accessToken,
@@ -14,7 +14,7 @@ export default function useAuth() {
             ...options.headers   
         }
 
-        return requester.baseRequest(method, url, data, optionWrapper)
+        return requester.baseRequest(method, url, data, authData.accessToken ? authOptions : options)
     }
 
     return {
