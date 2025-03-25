@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import CreateComments from "../create-comments/CreateComments";
 import ShowComments from "../show-comments/ShowComments";
-import commentService from "../../services/commentService";
 import { useDeleteGame, useGame } from "../../api/gameApi";
 import useAuth from "../../hooks/useAuth";
-import { useComments } from "../../api/commentsApi";
+import { useComments, useCreateComment } from "../../api/commentsApi";
 
 export default function GameDetails() {
   const navigate = useNavigate();
@@ -13,7 +11,8 @@ export default function GameDetails() {
   const { gameId } = useParams();
   const { game } = useGame(gameId);
   const { deleteGame } = useDeleteGame();
-  const {comments} = useComments(gameId);
+  const {comments, setComments} = useComments(gameId);
+  const {create} = useCreateComment()
 
   const gameDeleteClickHandler = async () => {
     const hasConfirm = confirm(
@@ -29,9 +28,11 @@ export default function GameDetails() {
     navigate("/games");
   };
 
-  const createCommentCreateHandler = (newComment) => {
-    setComments((state) => [...state, newComment]);
-  };
+  const createCommentCreateHandler = async (comment) => {
+     const newComment = await create(gameId, comment);
+     
+     setComments(state => [...state, newComment]);
+    };
 
   const isOwner = userId === game._ownerId;
 

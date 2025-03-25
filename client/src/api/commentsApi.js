@@ -18,6 +18,23 @@ export const useComments = (gameId) => {
     }, [request, gameId])
 
     return {
-        comments
+        comments,
+        setComments
+    }
+}
+
+export const useCreateComment = () => {
+    const { request } = useAuth() 
+
+    const create = (gameId, comment ) => {
+        const data = {
+            gameId,
+            comment
+        }
+        return request.post(baseUrl, data)
+    }
+
+    return {
+        create
     }
 }
